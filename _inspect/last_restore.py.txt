@@ -1,0 +1,64 @@
+py -3 -c "
+from pathlib import Path
+import shutil
+import numpy as np
+from PIL import Image
+from collections import deque
+
+BACKUP = Path(r'C:\Users\User\Downloads\comics-20260811T110120Z-1-001\comics\Law of index\rule of Law of index')
+PAGE = Path(r'c:\Users\User\OneDrive - The Education University of Hong Kong\桌面\comics\Law of index\rule of Law of index\indices-club-chapter-1-color.png')
+DESK = Path(r'C:\Users\User\OneDrive - The Education University of Hong Kong\桌面')
+
+def luma(a):
+    return 0.299*a[...,0]+0.587*a[...,1]+0.114*a[...,2]
+def feather(m,n=2):
+    s=m.astype(np.float32)
+    for _ in range(n):
+        p=np.pad(s,1,mode='edge')
+        s=(p[1:-1,1:-1]*4+p[:-2,1:-1]+p[2:,1:-1]+p[1:-1,:-2]+p[1:-1,2:])/8
+    return np.clip(s,0,1)
+def blobs(mask, lo, hi):
+    h,w=mask.shape; vis=np.zeros_like(mask); keep=np.zeros_like(mask)
+    ys,xs=np.where(mask)
+    for sy,sx in zip(ys,xs):
+        if vis[sy,sx]: continue
+        q=deque([(int(sy),int(sx))]); vis[sy,sx]=True; cells=[(int(sy),int(sx))]
+        while q:
+            cy,cx=q.popleft()
+            for dy,dx in ((-1,0),(1,0),(0,-1),(0,1)):
+                ny,nx=cy+dy,cx+dx
+                if 0<=ny<h and 0<=nx<w and mask[ny,nx] and not vis[ny,nx]:
+                    vis[ny,nx]=True; q.append((ny,nx)); cells.append((ny,nx))
+        if lo<=len(cells)<=hi:
+            for cy,cx in cells: keep[cy,cx]=True
+    return keep
+def dye_blond(img,a):
+    y=luma(img.astype(np.float32))
+    sh=np.array([175.,122,65]); md=np.array([216.,164,106]); hi=np.array([246.,208,161])
+    t=np.clip((y-70)/160.,0,1)[...,None]
+    target=np.where(t<0.5, sh+(md-sh)*(t*2), md+(hi-md)*((t-0.5)*2))
+    ty=luma(target)
+    scale=np.clip(y/np.maximum(ty,1),0.75,1.25)[...,None]
+    dyed=np.clip(target*scale,0,255)
+    return np.clip(img.astype(np.float32)*(1-a[...,None])+dyed*a[...,None],0,255).astype(np.uint8)
+
+# Restore original art, then blond hair only — no iris stamp
+img=np.array(Image.open(BACKUP/'indices-club-chapter-1-color.png').convert('RGB'))
+r,g,b=[img[:,:,i].astype(np.float32) for i in range(3)]
+y=luma(img.astype(np.float32))
+mx=np.maximum(np.maximum(r,g),b); mn=np.minimum(np.minimum(r,g),b)
+chroma=mx-mn
+zone=np.zeros(img.shape[:2],bool); zone[860:1165,0:250]=True
+white=(r>230)&(g>220)&(b>200)
+hair=zone & ~white & (y>70)&(y<238) & (
+    ((chroma<48)&(np.abs(r-g)<26)&(np.abs(g-b)<36))
+    | ((b>r+2)&(b>g-6)&(chroma<70)&(y<220))
+)
+# do not recolor the face/eye: keep hair off the eye socket
+hair[930:1010, 155:230] = False
+hair=blobs(hair,25,40000)
+img=dye_blond(img, feather(hair,2))
+Image.fromarray(img).save(PAGE, quality=95)
+shutil.copy2(PAGE, DESK/PAGE.name)
+print('restored eye, hair pixels', int(hair.sum()))
+"
