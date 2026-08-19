@@ -1,0 +1,17 @@
+_inspect/
+__pycache__/
+*.pyc
+.env
+.env.*
+*.pem
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# local edit helpers, not part of the site
+_*.py
+_*.png
+repair_rhs_panel.py
+lessons/**/_*.py
+lessons/**/*.md
+

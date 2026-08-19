@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>S3 Mathematics · S3 Lessons</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/gallery.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark">S3</span>
+      <div>
+        <strong>S3 MATHEMATICS</strong>
+        <small data-i18n="brand.sub">S3 Lessons · JM24–JM35</small>
+      </div>
+    </div>
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button type="button" class="lang-btn" data-lang="zh">中</button>
+      <button type="button" class="lang-btn is-active" data-lang="en">EN</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow" data-i18n="gallery.eyebrow">Gallery</p>
+      <h1 data-i18n="gallery.title">S3 Lessons</h1>
+      <p class="lede" data-i18n="gallery.lede">Pick a topic to open its lesson hub — Interactive Tools, Comics, and Game.</p>
+    </section>
+
+    <section class="gallery" id="gallery" aria-label="S3 lesson topics"></section>
+  </main>
+
+  <footer class="site-footer" data-i18n="gallery.footer">
+    S3 Mathematics Gallery · JM24 & JM25 comics available now
+  </footer>
+
+  <script src="js/topics.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/i18n-boot.js"></script>
+  <script>
+    window.renderGallery = function renderGallery() {
+      var gallery = document.getElementById("gallery");
+      if (!gallery) return;
+      gallery.innerHTML = "";
+
+      window.S3_TOPICS.forEach(function (topic) {
+        var title = window.I18n.t("topic." + topic.id + ".title");
+        var desc = window.I18n.t("topic." + topic.id + ".desc");
+
+        var card = document.createElement("a");
+        card.className = "topic-card" + (topic.ready ? " is-ready" : " is-soon");
+        card.href = "lessons/" + topic.id + "/index.html";
+
+        var art = document.createElement("div");
+        art.className = "card-art " + topic.artClass;
+        var symbol = document.createElement("span");
+        symbol.className = "card-symbol";
+        symbol.textContent = topic.symbol;
+        art.appendChild(symbol);
+
+        var body = document.createElement("div");
+        body.className = "card-body";
+        body.innerHTML =
+          '<p class="lesson-code">' + topic.code + " · Lesson " + topic.lesson + "</p>" +
+          "<h2>" + title + "</h2>" +
+          "<p>" + desc + "</p>";
+
+        var tags = document.createElement("div");
+        tags.className = "tags";
+        topic.tags.forEach(function (tag) {
+          var span = document.createElement("span");
+          if (tag === "Coming soon") {
+            span.textContent = window.I18n.t("tag.soon");
+          } else if (tag === "Tools") {
+            span.textContent = window.I18n.t("tag.tools");
+          } else if (tag === "Comics") {
+            span.textContent = window.I18n.t("tag.comics");
+          } else if (tag === "Game") {
+            span.textContent = window.I18n.t("tag.game");
+          } else {
+            span.textContent = tag;
+          }
+          tags.appendChild(span);
+        });
+        body.appendChild(tags);
+
+        card.appendChild(art);
+        card.appendChild(body);
+        gallery.appendChild(card);
+      });
+    };
+
+    window.renderGallery();
+  </script>
+</body>
+</html>
