@@ -3,6 +3,7 @@
   var activeTab = "tools";
   var activeComicTopic = null;
   var activeToolPill = "sci-notation";
+  var jm28Active = "lines";
 
   function t(key, fallback) {
     if (window.I18n && typeof window.I18n.t === "function") {
@@ -73,6 +74,21 @@
     if (id === "jm24" && window.IndicesGame) return window.IndicesGame;
     if (id === "jm25" && window.FactorGame) return window.FactorGame;
     if (id === "jm26" && window.BoundaryRunner) return window.BoundaryRunner;
+    if (id === "jm28") {
+      if (jm28Active === "centres" && window.TriangleCentreGame) {
+        return window.TriangleCentreGame;
+      }
+      if (jm28Active === "angles" && window.AngleDetectiveGame) {
+        return window.AngleDetectiveGame;
+      }
+      if (jm28Active === "run" && window.CenterRunGame) {
+        return window.CenterRunGame;
+      }
+      if (jm28Active === "factory" && window.JM28FactoryGame) {
+        return window.JM28FactoryGame;
+      }
+      if (window.SpecialLineGame) return window.SpecialLineGame;
+    }
     return null;
   }
 
@@ -658,9 +674,372 @@
     );
   }
 
+  function jm28Meta() {
+    if (jm28Active === "centres") {
+      return {
+        title: "game.title.jm28.centres",
+        intro: "game.intro.jm28.centres",
+        ready: "game.readyMsg.jm28.centres",
+        progress: "0 / 8",
+      };
+    }
+    if (jm28Active === "angles") {
+      return {
+        title: "game.title.jm28.angles",
+        intro: "game.intro.jm28.angles",
+        ready: "game.readyMsg.jm28.angles",
+        progress: "0 / 8",
+      };
+    }
+    if (jm28Active === "run") {
+      return {
+        title: "game.title.jm28.run",
+        intro: "game.intro.jm28.run",
+        ready: "game.readyMsg.jm28.run",
+        progress: "0",
+      };
+    }
+    if (jm28Active === "factory") {
+      return {
+        title: "game.title.jm28.factory",
+        intro: "game.intro.jm28.factory",
+        ready: "game.readyMsg.jm28.factory",
+        progress: "0",
+      };
+    }
+    return {
+      title: "game.title.jm28",
+      intro: "game.intro.jm28",
+      ready: "game.readyMsg.jm28",
+      progress: "0 / 10",
+    };
+  }
+
+  function jm28PillsHtml() {
+    var pills = [
+      { id: "lines", key: "game.pill.lines", fallback: "Special Lines" },
+      { id: "centres", key: "game.pill.centres", fallback: "Four Centres" },
+      { id: "angles", key: "game.pill.angles", fallback: "Angle Detective" },
+      { id: "run", key: "game.pill.run", fallback: "Center Run" },
+      { id: "factory", key: "game.pill.factory", fallback: "Factory Line" },
+    ];
+    return pills
+      .map(function (pill) {
+        return (
+          '<button type="button" class="game-preset-pill' +
+          (jm28Active === pill.id ? " is-active" : "") +
+          '" data-jm28-game="' +
+          pill.id +
+          '" data-i18n="' +
+          pill.key +
+          '">' +
+          t(pill.key, pill.fallback) +
+          "</button>"
+        );
+      })
+      .join("");
+  }
+
+  function refreshJM28Pills() {
+    var meta = jm28Meta();
+    document.querySelectorAll("[data-jm28-game]").forEach(function (btn) {
+      btn.classList.toggle("is-active", btn.getAttribute("data-jm28-game") === jm28Active);
+    });
+    var head = document.querySelector(".line-mission-game h2");
+    var intro = document.querySelector(".line-mission-game .game-intro");
+    if (head) head.textContent = t(meta.title, "Special Line Mission");
+    if (intro) intro.textContent = t(meta.intro, "");
+  }
+
+  function renderJM28Overlay(readyKey) {
+    return (
+      '    <div class="game-overlay is-visible" id="game-overlay">' +
+      '      <div class="overlay-card">' +
+      '        <h3 id="overlay-title" data-i18n="game.ready">' +
+      t("game.ready", "Ready?") +
+      "</h3>" +
+      '        <p id="overlay-msg" data-i18n="' +
+      readyKey +
+      '">' +
+      t(readyKey, "") +
+      "</p>" +
+      '        <div class="overlay-actions">' +
+      '        <button type="button" class="reader-nav" id="btn-start" data-i18n="game.start">' +
+      t("game.start", "Start") +
+      "</button>" +
+      '        <button type="button" class="reader-nav" id="btn-play-centres" hidden data-i18n="game.centres.play">' +
+      t("game.centres.play", "Four Centres →") +
+      "</button>" +
+      '        <button type="button" class="reader-nav overlay-review" id="btn-review-comics" hidden data-i18n="game.reviewComics">' +
+      t("game.reviewComics", "Review comics →") +
+      "</button>" +
+      "        </div>" +
+      "      </div>" +
+      "    </div>"
+    );
+  }
+
+  function renderJM28AnglesHtml(meta) {
+    return (
+      '<div class="indices-game line-mission-game angle-detective">' +
+      '  <div class="game-preset-pills jm28-game-pills" role="group" aria-label="JM28 games">' +
+      jm28PillsHtml() +
+      "  </div>" +
+      '  <div class="game-head">' +
+      "    <div>" +
+      "      <h2>" +
+      t(meta.title, "Angle Detective") +
+      "</h2>" +
+      '      <p class="game-intro">' +
+      t(meta.intro, "") +
+      "</p>" +
+      "    </div>" +
+      '    <div class="game-hud" id="game-hud">' +
+      '      <span><span data-i18n="game.score">' +
+      t("game.score", "Score") +
+      '</span>: <strong id="hud-score">0</strong></span>' +
+      '      <span><span data-i18n="game.progress">' +
+      t("game.progress", "Progress") +
+      '</span>: <strong id="hud-progress">' +
+      meta.progress +
+      "</strong></span>" +
+      "    </div>" +
+      "  </div>" +
+      '  <div class="line-mission-banner" id="line-mission-banner"></div>' +
+      '  <p class="line-mission-hint" id="line-mission-hint" hidden></p>' +
+      '  <div class="game-wrap angle-detective-wrap">' +
+      '    <p class="game-toast" id="game-toast" aria-live="polite"></p>' +
+      '    <div class="ad-stage">' +
+      '      <div class="ad-gate">' +
+      '        <div class="ad-gate-bar"></div>' +
+      '        <div class="ad-gate-frame">' +
+      '          <p class="ad-gate-tag" data-i18n="game.angles.gate">' +
+      t("game.angles.gate", "SECURITY SCAN") +
+      "</p>" +
+      '          <canvas id="game-canvas" width="640" height="400"></canvas>' +
+      "        </div>" +
+      '        <div class="ad-gate-bar"></div>' +
+      "      </div>" +
+      '      <aside class="ad-panel">' +
+      '        <p class="ad-panel-kicker" data-i18n="game.angles.reason">' +
+      t("game.angles.reason", "Reason") +
+      "</p>" +
+      '        <div class="ad-reasons">' +
+      '          <button type="button" class="ad-reason" data-reason="corr" data-i18n="game.angles.corr">' +
+      t("game.angles.corr", "corr. angles") +
+      "</button>" +
+      '          <button type="button" class="ad-reason" data-reason="alt" data-i18n="game.angles.alt">' +
+      t("game.angles.alt", "alt. angles") +
+      "</button>" +
+      '          <button type="button" class="ad-reason" data-reason="int" data-i18n="game.angles.int">' +
+      t("game.angles.int", "int. angles") +
+      "</button>" +
+      "        </div>" +
+      '        <p class="ad-readout">x = <strong id="ad-entry">—</strong>°</p>' +
+      '        <div class="ad-keypad" id="ad-keypad"></div>' +
+      '        <button type="button" class="ad-check" id="btn-line-check" data-i18n="game.line.check">' +
+      t("game.line.check", "Check") +
+      "</button>" +
+      '        <button type="button" class="ad-next" id="btn-line-next" hidden data-i18n="game.line.next">' +
+      t("game.line.next", "Next mission →") +
+      "</button>" +
+      "      </aside>" +
+      "    </div>" +
+      renderJM28Overlay(meta.ready) +
+      "  </div>" +
+      "</div>"
+    );
+  }
+
+  function renderJM28RunHtml(meta) {
+    return (
+      '<div class="indices-game line-mission-game center-run">' +
+      '  <div class="game-preset-pills jm28-game-pills" role="group" aria-label="JM28 games">' +
+      jm28PillsHtml() +
+      "  </div>" +
+      '  <div class="game-head">' +
+      "    <div>" +
+      "      <h2>" +
+      t(meta.title, "Center Run") +
+      "</h2>" +
+      '      <p class="game-intro">' +
+      t(meta.intro, "") +
+      "</p>" +
+      "    </div>" +
+      '    <div class="game-hud" id="game-hud">' +
+      '      <span><span data-i18n="game.score">' +
+      t("game.score", "Score") +
+      '</span>: <strong id="hud-score">0</strong></span>' +
+      '      <span><span data-i18n="game.progress">' +
+      t("game.progress", "Progress") +
+      '</span>: <strong id="hud-progress">' +
+      meta.progress +
+      "</strong></span>" +
+      '      <span><span data-i18n="game.run.time">' +
+      t("game.run.time", "Time") +
+      '</span>: <strong id="hud-timer">10</strong></span>' +
+      "    </div>" +
+      "  </div>" +
+      '  <p class="line-mission-hint" id="line-mission-hint" hidden></p>' +
+      '  <div class="game-wrap center-run-wrap">' +
+      '    <p class="game-toast" id="game-toast" aria-live="polite"></p>' +
+      '    <div class="cr-stage">' +
+      '      <div class="cr-banner" id="cr-question"></div>' +
+      '      <div class="cr-board">' +
+      '        <div class="cr-board-view">' +
+      '          <div class="cr-board-scroll" id="cr-board-scroll">' +
+      '            <canvas id="game-canvas" width="960" height="480"></canvas>' +
+      "          </div>" +
+      '          <input type="range" class="cr-scroll" id="cr-scroll" min="0" max="0" value="0" hidden aria-label="' +
+      t("game.run.scroll", "Scroll to see the full diagram") +
+      '" />' +
+      "        </div>" +
+      '        <p class="cr-kind" id="cr-kind"></p>' +
+      '        <p class="cr-fact" id="cr-fact" hidden></p>' +
+      "      </div>" +
+      '      <div class="cr-buttons" role="group" aria-label="' +
+      t("game.run.choices", "Triangle centres") +
+      '">' +
+      '        <button type="button" class="cr-centre cr-incentre" data-centre="incentre">' +
+      "<span>I</span> " +
+      t("game.run.incentre", "Incenter") +
+      "</button>" +
+      '        <button type="button" class="cr-centre cr-centroid" data-centre="centroid">' +
+      "<span>G</span> " +
+      t("game.run.centroid", "Centroid") +
+      "</button>" +
+      '        <button type="button" class="cr-centre cr-circumcentre" data-centre="circumcentre">' +
+      "<span>O</span> " +
+      t("game.run.circumcentre", "Circumcenter") +
+      "</button>" +
+      '        <button type="button" class="cr-centre cr-orthocentre" data-centre="orthocentre">' +
+      "<span>H</span> " +
+      t("game.run.orthocentre", "Orthocenter") +
+      "</button>" +
+      "      </div>" +
+      "    </div>" +
+      '    <button type="button" class="reader-nav" id="btn-line-next" hidden data-i18n="game.line.next">' +
+      t("game.line.next", "Next mission →") +
+      "</button>" +
+      renderJM28Overlay(meta.ready) +
+      "  </div>" +
+      "</div>"
+    );
+  }
+
+  function renderJM28FactoryHtml(meta) {
+    return (
+      '<div id="jm28-factory-line-game" class="lesson-game-widget indices-game line-mission-game factory-line">' +
+      '  <div class="game-preset-pills jm28-game-pills" role="group" aria-label="JM28 games">' +
+      jm28PillsHtml() +
+      "  </div>" +
+      '  <div class="game-head">' +
+      "    <div>" +
+      "      <h2>" +
+      t(meta.title, "Shape Matcher: Factory Line") +
+      "</h2>" +
+      '      <p class="game-intro">' +
+      t(meta.intro, "") +
+      "</p>" +
+      "    </div>" +
+      '    <div class="game-hud" id="game-hud">' +
+      '      <span><span data-i18n="game.score">' +
+      t("game.score", "Score") +
+      '</span>: <strong id="hud-score">0</strong></span>' +
+      '      <span><span data-i18n="game.combo">' +
+      t("game.combo", "Combo") +
+      '</span>: <strong id="hud-combo">x1</strong></span>' +
+      '      <span><span data-i18n="game.lives">' +
+      t("game.lives", "Lives") +
+      '</span>: <strong id="hud-lives">♥♥♥</strong></span>' +
+      "    </div>" +
+      "  </div>" +
+      '  <div class="factory-timer" aria-hidden="true"><i id="factory-timer-bar"></i></div>' +
+      '  <div class="game-wrap factory-wrap">' +
+      '    <p class="game-toast" id="game-toast" aria-live="polite"></p>' +
+      '    <div class="factory-banner" id="factory-target"></div>' +
+      '    <canvas id="triangle-inspector-canvas" width="960" height="420"></canvas>' +
+      '    <p class="factory-feedback" id="factory-feedback" aria-live="polite"></p>' +
+      '    <div class="factory-dock">' +
+      '    <div class="factory-actions">' +
+      '      <button type="button" class="btn-accept" id="btn-factory-accept">' +
+      t("game.factory.accept", "ACCEPT (合格)") +
+      "</button>" +
+      '      <button type="button" class="btn-reject" id="btn-factory-reject">' +
+      t("game.factory.reject", "REJECT (錯誤/次品)") +
+      "</button>" +
+      "    </div>" +
+      '    <button type="button" class="reader-nav factory-next" id="btn-line-next" hidden data-i18n="game.line.next">' +
+      t("game.line.next", "Next mission →") +
+      "</button>" +
+      "    </div>" +
+      renderJM28Overlay(meta.ready) +
+      "  </div>" +
+      "</div>"
+    );
+  }
+
+  function renderJM28GameHtml(topic) {
+    var meta = jm28Meta();
+    if (jm28Active === "angles") {
+      return renderJM28AnglesHtml(meta);
+    }
+    if (jm28Active === "run") {
+      return renderJM28RunHtml(meta);
+    }
+    if (jm28Active === "factory") {
+      return renderJM28FactoryHtml(meta);
+    }
+    return (
+      '<div class="indices-game line-mission-game">' +
+      '  <div class="game-preset-pills jm28-game-pills" role="group" aria-label="JM28 games">' +
+      jm28PillsHtml() +
+      "  </div>" +
+      '  <div class="game-head">' +
+      "    <div>" +
+      "      <h2>" +
+      t(meta.title, "Special Line Mission") +
+      "</h2>" +
+      '      <p class="game-intro">' +
+      t(meta.intro, "") +
+      "</p>" +
+      "    </div>" +
+      '    <div class="game-hud" id="game-hud">' +
+      '      <span><span data-i18n="game.score">' +
+      t("game.score", "Score") +
+      '</span>: <strong id="hud-score">0</strong></span>' +
+      '      <span><span data-i18n="game.progress">' +
+      t("game.progress", "Progress") +
+      '</span>: <strong id="hud-progress">' +
+      meta.progress +
+      "</strong></span>" +
+      "    </div>" +
+      "  </div>" +
+      '  <div class="line-mission-banner" id="line-mission-banner"></div>' +
+      '  <p class="line-mission-hint" id="line-mission-hint" hidden></p>' +
+      '  <div class="game-wrap line-mission-wrap">' +
+      '    <p class="game-toast" id="game-toast" aria-live="polite"></p>' +
+      '    <canvas id="game-canvas" width="900" height="520"></canvas>' +
+      renderJM28Overlay(meta.ready) +
+      "  </div>" +
+      '  <div class="line-mission-actions">' +
+      '    <button type="button" class="reader-nav" id="btn-line-check" data-i18n="game.line.check">' +
+      t("game.line.check", "Check") +
+      "</button>" +
+      '    <button type="button" class="reader-nav" id="btn-line-next" hidden data-i18n="game.line.next">' +
+      t("game.line.next", "Next mission →") +
+      "</button>" +
+      "  </div>" +
+      "</div>"
+    );
+  }
+
   function renderGameHtml(topic) {
     if (topic.id === "jm26") {
       return renderJM26GameHtml(topic);
+    }
+    if (topic.id === "jm28") {
+      return renderJM28GameHtml(topic);
     }
     var titleKey = "game.title." + topic.id;
     var introKey = "game.intro." + topic.id;
@@ -744,6 +1123,21 @@
     if (window.BoundaryRunner && window.BoundaryRunner.destroy) {
       window.BoundaryRunner.destroy();
     }
+    if (window.SpecialLineGame && window.SpecialLineGame.destroy) {
+      window.SpecialLineGame.destroy();
+    }
+    if (window.TriangleCentreGame && window.TriangleCentreGame.destroy) {
+      window.TriangleCentreGame.destroy();
+    }
+    if (window.AngleDetectiveGame && window.AngleDetectiveGame.destroy) {
+      window.AngleDetectiveGame.destroy();
+    }
+    if (window.CenterRunGame && window.CenterRunGame.destroy) {
+      window.CenterRunGame.destroy();
+    }
+    if (window.JM28FactoryGame && window.JM28FactoryGame.destroy) {
+      window.JM28FactoryGame.destroy();
+    }
 
     if (!hasGame()) {
       el.innerHTML = renderComingSoon(
@@ -755,10 +1149,53 @@
 
     el.innerHTML = renderGameHtml(topic);
 
+    if (topic.id === "jm28") {
+      bindJM28Pills();
+    }
+
     var game = getLessonGame();
     if (game && game.init) {
       game.init();
     }
+  }
+
+  function bindJM28Pills() {
+    document.querySelectorAll("[data-jm28-game]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        if (window.JM28Games) window.JM28Games.switchTo(btn.getAttribute("data-jm28-game"));
+      });
+    });
+  }
+
+  function destroyJM28Games() {
+    if (window.SpecialLineGame && window.SpecialLineGame.destroy) {
+      window.SpecialLineGame.destroy();
+    }
+    if (window.TriangleCentreGame && window.TriangleCentreGame.destroy) {
+      window.TriangleCentreGame.destroy();
+    }
+    if (window.AngleDetectiveGame && window.AngleDetectiveGame.destroy) {
+      window.AngleDetectiveGame.destroy();
+    }
+    if (window.CenterRunGame && window.CenterRunGame.destroy) {
+      window.CenterRunGame.destroy();
+    }
+    if (window.JM28FactoryGame && window.JM28FactoryGame.destroy) {
+      window.JM28FactoryGame.destroy();
+    }
+  }
+
+  function switchJM28Game(id) {
+    if (id !== "lines" && id !== "centres" && id !== "angles" && id !== "run" && id !== "factory") return;
+    if (id === jm28Active) return;
+    jm28Active = id;
+    var view = document.getElementById("view-game");
+    if (!view) return;
+    destroyJM28Games();
+    view.innerHTML = renderJM28GameHtml(getTopic());
+    bindJM28Pills();
+    var game = getLessonGame();
+    if (game && game.init) game.init();
   }
 
   window.LessonComics = {
@@ -780,6 +1217,14 @@
     refresh: function refresh() {
       renderShell();
     },
+  };
+
+  window.JM28Games = {
+    unlockCentres: function unlockCentres() {
+      var btn = document.getElementById("btn-play-centres");
+      if (btn) btn.hidden = false;
+    },
+    switchTo: switchJM28Game,
   };
 
   window.addEventListener("hashchange", function () {

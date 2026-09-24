@@ -52,7 +52,7 @@ window.S3_TOPICS = [
     artClass: "art-triangle",
     ready: true,
     desc: "Classroom manga — special lines, four triangle centres, angle pairs, and similar and congruent triangles.",
-    tags: ["Comics"],
+    tags: ["Comics", "Game"],
   },
   {
     id: "jm29",
