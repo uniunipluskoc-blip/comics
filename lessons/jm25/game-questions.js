@@ -925,7 +925,7 @@ window.getJM25GameQuestions = function getJM25GameQuestions(presetId) {
 
   function readTokenForward(s, i) {
     var j = i;
-    while (j < s.length && !/[\s×÷。]/.test(s.charAt(j))) j += 1;
+    while (j < s.length && !/[\s×÷。)\]]/.test(s.charAt(j))) j += 1;
     if (j === i) return null;
     return { start: i, end: j, raw: s.slice(i, j) };
   }
@@ -934,7 +934,7 @@ window.getJM25GameQuestions = function getJM25GameQuestions(presetId) {
     var i = end;
     while (i > 0 && s.charAt(i - 1) === " ") i -= 1;
     var j = i;
-    while (j > 0 && !/[\s×÷。]/.test(s.charAt(j - 1))) j -= 1;
+    while (j > 0 && !/[\s×÷。(\[]/.test(s.charAt(j - 1))) j -= 1;
     if (j === i) return null;
     return { start: j, end: i, raw: s.slice(j, i) };
   }
@@ -984,9 +984,11 @@ window.getJM25GameQuestions = function getJM25GameQuestions(presetId) {
     return false;
   }
 
-  window.formatJM25GameMath = function formatJM25GameMath(text) {
-    if (!text || text.indexOf("/") < 0) return escapeHtml(text);
-    var s = String(text);
+  var PAREN_ADD_FRAC =
+    /\(([0-9a-zA-Z²]+)\/([0-9a-zA-Z²]+)((?:\s*[\+\-\u2212]\s*[^)]+)?)\)([²³⁴⁵⁶⁷⁸⁹⁰]?)/g;
+
+  function formatSlashFractions(s) {
+    if (!s || s.indexOf("/") < 0) return escapeHtml(s);
     var pos = 0;
     var out = "";
     while (pos < s.length) {
@@ -1006,5 +1008,31 @@ window.getJM25GameQuestions = function getJM25GameQuestions(presetId) {
       }
     }
     return out;
+  }
+
+  /** (x/2 + 25)² → tall fraction for x/2 with +25 aligned inside parentheses */
+  function formatParenAdditiveFractions(s) {
+    PAREN_ADD_FRAC.lastIndex = 0;
+    var out = "";
+    var last = 0;
+    var m;
+    while ((m = PAREN_ADD_FRAC.exec(s))) {
+      out += formatSlashFractions(s.slice(last, m.index));
+      out +=
+        '<span class="jm25-paren-wrap">(<span class="jm25-paren-body">' +
+        fracHtml(m[1], m[2]) +
+        escapeHtml(m[3]) +
+        "</span>)</span>" +
+        escapeHtml(m[4] || "");
+      last = PAREN_ADD_FRAC.lastIndex;
+    }
+    out += formatSlashFractions(s.slice(last));
+    return out;
+  }
+
+  window.formatJM25GameMath = function formatJM25GameMath(text) {
+    if (!text) return "";
+    if (text.indexOf("/") < 0) return escapeHtml(text);
+    return formatParenAdditiveFractions(String(text));
   };
 })();

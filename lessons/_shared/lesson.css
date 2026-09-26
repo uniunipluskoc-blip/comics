@@ -2258,6 +2258,26 @@ body.reader-open {
   opacity: 0.95;
 }
 
+.indices-game .jm25-paren-wrap,
+#jm25-factor-duel-game .jm25-paren-wrap {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.indices-game .jm25-paren-body,
+#jm25-factor-duel-game .jm25-paren-body {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15em;
+}
+
+.indices-game .jm25-paren-body .jm25-frac,
+#jm25-factor-duel-game .jm25-paren-body .jm25-frac {
+  margin: 0 0.05em;
+}
+
 #jm25-factor-duel-game .duel-card.is-settled.is-question {
   max-width: 100%;
   text-align: center;
