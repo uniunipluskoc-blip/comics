@@ -116,7 +116,12 @@ window.FactorGame = (function () {
   function setQuestionText() {
     var el = document.getElementById("game-question");
     if (!el || !question) return;
-    el.textContent = lang() === "zh" ? question.questionZh : question.questionEn;
+    var raw = lang() === "zh" ? question.questionZh : question.questionEn;
+    if (window.formatJM25GameMath) {
+      el.innerHTML = window.formatJM25GameMath(raw);
+    } else {
+      el.textContent = raw;
+    }
   }
 
   function shuffle(arr) {
@@ -632,10 +637,10 @@ window.FactorGame = (function () {
       });
     }
 
-    document.querySelectorAll(".game-preset-pill").forEach(function (pill) {
+    document.querySelectorAll(".game-preset-pill[data-preset]").forEach(function (pill) {
       pill.addEventListener("click", function () {
         if (running) return;
-        document.querySelectorAll(".game-preset-pill").forEach(function (p) {
+        document.querySelectorAll(".game-preset-pill[data-preset]").forEach(function (p) {
           p.classList.remove("is-active");
         });
         pill.classList.add("is-active");

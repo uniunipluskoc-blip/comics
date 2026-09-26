@@ -4,6 +4,7 @@
   var activeComicTopic = null;
   var activeToolPill = "sci-notation";
   var jm28Active = "lines";
+  var jm25Active = "shooter";
 
   function t(key, fallback) {
     if (window.I18n && typeof window.I18n.t === "function") {
@@ -72,7 +73,10 @@
   function getLessonGame() {
     var id = getLessonId();
     if (id === "jm24" && window.IndicesGame) return window.IndicesGame;
-    if (id === "jm25" && window.FactorGame) return window.FactorGame;
+    if (id === "jm25") {
+      if (jm25Active === "duel" && window.JM25FactorDuel) return window.JM25FactorDuel;
+      if (window.FactorGame) return window.FactorGame;
+    }
     if (id === "jm26" && window.BoundaryRunner) return window.BoundaryRunner;
     if (id === "jm28") {
       if (jm28Active === "centres" && window.TriangleCentreGame) {
@@ -1034,12 +1038,120 @@
     );
   }
 
+  function jm25PillsHtml() {
+    var pills = [
+      { id: "shooter", key: "game.pill.jm25.shooter", fallback: "Bracket Shooter" },
+      { id: "duel", key: "game.pill.jm25.duel", fallback: "Factor Duel" },
+    ];
+    return pills
+      .map(function (pill) {
+        return (
+          '<button type="button" class="game-preset-pill jm25-switch-pill' +
+          (jm25Active === pill.id ? " is-active" : "") +
+          '" data-jm25-game="' +
+          pill.id +
+          '" data-i18n="' +
+          pill.key +
+          '">' +
+          t(pill.key, pill.fallback) +
+          "</button>"
+        );
+      })
+      .join("");
+  }
+
+  function renderJM25DuelHtml() {
+    return (
+      '<div id="jm25-factor-duel-game" class="lesson-game-widget indices-game">' +
+      '  <div class="game-preset-pills jm25-game-pills" role="group" aria-label="JM25 games">' +
+      jm25PillsHtml() +
+      "  </div>" +
+      '  <div class="game-head">' +
+      "    <div>" +
+      "      <h2>" +
+      t("game.title.jm25.duel", "Factor Duel") +
+      "</h2>" +
+      '      <p class="game-intro">' +
+      t("game.intro.jm25.duel", "") +
+      "</p>" +
+      "    </div>" +
+      '    <div class="game-hud" id="game-hud">' +
+      '      <span><span data-i18n="game.duel.turns">' +
+      t("game.duel.turns", "Turns") +
+      '</span>: <strong id="hud-progress">0 / 5</strong></span>' +
+      '      <span><span data-i18n="game.duel.bombs">' +
+      t("game.duel.bombs", "Bombs") +
+      '</span>: <strong id="hud-bombs">0 / 3</strong></span>' +
+      "    </div>" +
+      "  </div>" +
+      '  <div class="duel-stage">' +
+      '    <div class="duel-ai" id="duel-ai" aria-hidden="true"><span>AI</span></div>' +
+      '    <div class="duel-zones">' +
+      '      <div class="duel-zone duel-question-zone" id="duel-question-zone">' +
+      '        <p class="duel-zone-label">' +
+      t("game.duel.questionZone", "Question") +
+      "</p>" +
+      '        <div class="duel-zone-slot" id="duel-question-slot"></div>' +
+      "      </div>" +
+      '      <div class="duel-zone duel-answer-zone" id="duel-answer-zone">' +
+      '        <p class="duel-zone-label">' +
+      t("game.duel.answerZone", "Answer") +
+      "</p>" +
+      '        <div class="duel-zone-slot" id="duel-answer-slot"></div>' +
+      "      </div>" +
+      "    </div>" +
+      '    <div class="duel-bomb-rack" id="duel-bomb-rack"></div>' +
+      '    <p class="duel-feedback" id="duel-feedback" aria-live="polite"></p>' +
+      '    <div class="duel-hand-row">' +
+      '      <div class="duel-draw-pile" id="duel-draw-pile" aria-hidden="true"></div>' +
+      '      <div class="duel-hand" id="duel-hand"></div>' +
+      "    </div>" +
+      '    <div class="game-overlay is-visible" id="game-overlay">' +
+      '      <div class="overlay-card duel-setup-card">' +
+      '        <h3 id="overlay-title">' +
+      t("game.ready", "Ready?") +
+      "</h3>" +
+      '        <p id="overlay-msg">' +
+      t("game.readyMsg.jm25.duel", "") +
+      "</p>" +
+      '        <label class="duel-turns-label" for="duel-turns">' +
+      t("game.duel.setupTurns", "Battle length (questions)") +
+      "</label>" +
+      '        <input type="range" id="duel-turns" min="5" max="100" value="10" />' +
+      '        <output id="duel-turns-out" for="duel-turns">10</output>' +
+      '        <div class="overlay-actions">' +
+      '          <button type="button" class="reader-nav" id="btn-start">' +
+      t("game.start", "Start") +
+      "</button>" +
+      '          <button type="button" class="reader-nav overlay-review" id="btn-review-comics" hidden>' +
+      t("game.reviewComics", "Review comics →") +
+      "</button>" +
+      "        </div>" +
+      "      </div>" +
+      "    </div>" +
+      "  </div>" +
+      "</div>"
+    );
+  }
+
+  function withJM25Pills(html) {
+    return html.replace(
+      '<div class="indices-game">',
+      '<div class="indices-game"><div class="game-preset-pills jm25-game-pills" role="group" aria-label="JM25 games">' +
+        jm25PillsHtml() +
+        "</div>"
+    );
+  }
+
   function renderGameHtml(topic) {
     if (topic.id === "jm26") {
       return renderJM26GameHtml(topic);
     }
     if (topic.id === "jm28") {
       return renderJM28GameHtml(topic);
+    }
+    if (topic.id === "jm25" && jm25Active === "duel") {
+      return renderJM25DuelHtml();
     }
     var titleKey = "game.title." + topic.id;
     var introKey = "game.intro." + topic.id;
@@ -1138,6 +1250,9 @@
     if (window.JM28FactoryGame && window.JM28FactoryGame.destroy) {
       window.JM28FactoryGame.destroy();
     }
+    if (window.JM25FactorDuel && window.JM25FactorDuel.destroy) {
+      window.JM25FactorDuel.destroy();
+    }
 
     if (!hasGame()) {
       el.innerHTML = renderComingSoon(
@@ -1148,9 +1263,15 @@
     }
 
     el.innerHTML = renderGameHtml(topic);
+    if (topic.id === "jm25" && jm25Active !== "duel") {
+      el.innerHTML = withJM25Pills(el.innerHTML);
+    }
 
     if (topic.id === "jm28") {
       bindJM28Pills();
+    }
+    if (topic.id === "jm25") {
+      bindJM25Pills();
     }
 
     var game = getLessonGame();
@@ -1185,6 +1306,34 @@
     }
   }
 
+  function bindJM25Pills() {
+    document.querySelectorAll("[data-jm25-game]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        if (window.JM25Games) window.JM25Games.switchTo(btn.getAttribute("data-jm25-game"));
+      });
+    });
+  }
+
+  function destroyJM25Games() {
+    if (window.FactorGame && window.FactorGame.destroy) window.FactorGame.destroy();
+    if (window.JM25FactorDuel && window.JM25FactorDuel.destroy) window.JM25FactorDuel.destroy();
+  }
+
+  function switchJM25Game(id) {
+    if (id !== "shooter" && id !== "duel") return;
+    if (id === jm25Active) return;
+    if (getLessonId() !== "jm25") return;
+    jm25Active = id;
+    var view = document.getElementById("view-game");
+    if (!view) return;
+    destroyJM25Games();
+    view.innerHTML = renderGameHtml(getTopic());
+    if (jm25Active !== "duel") view.innerHTML = withJM25Pills(view.innerHTML);
+    bindJM25Pills();
+    var game = getLessonGame();
+    if (game && game.init) game.init();
+  }
+
   function switchJM28Game(id) {
     if (id !== "lines" && id !== "centres" && id !== "angles" && id !== "run" && id !== "factory") return;
     if (id === jm28Active) return;
@@ -1217,6 +1366,10 @@
     refresh: function refresh() {
       renderShell();
     },
+  };
+
+  window.JM25Games = {
+    switchTo: switchJM25Game,
   };
 
   window.JM28Games = {

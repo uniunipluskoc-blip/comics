@@ -95,8 +95,8 @@ window.JM25_GAME_BANK = {
       id: "a-q8",
       topic: "worksheet-a",
       source: "A",
-      questionEn: "Hence, factorize x² + 6x + 5.",
-      questionZh: "由此，因式分解 x² + 6x + 5。",
+      questionEn: "Factorize x² + 6x + 5.",
+      questionZh: "因式分解 x² + 6x + 5。",
       choices: [
         { textEn: "(x + 5)(x + 1)", textZh: "(x + 5)(x + 1)", correct: true },
         { textEn: "(x + 3)²", textZh: "(x + 3)²", correct: false },
@@ -121,8 +121,8 @@ window.JM25_GAME_BANK = {
       id: "a-q10",
       topic: "worksheet-a",
       source: "A",
-      questionEn: "Hence, factorize 3(y + 2)² − 18(y + 2) + 27.",
-      questionZh: "由此，因式分解 3(y + 2)² − 18(y + 2) + 27。",
+      questionEn: "Factorize 3(y + 2)² − 18(y + 2) + 27.",
+      questionZh: "因式分解 3(y + 2)² − 18(y + 2) + 27。",
       choices: [
         { textEn: "3(y − 1)²", textZh: "3(y − 1)²", correct: true },
         { textEn: "3(y + 1)²", textZh: "3(y + 1)²", correct: false },
@@ -147,8 +147,8 @@ window.JM25_GAME_BANK = {
       id: "a-q12",
       topic: "worksheet-a",
       source: "A",
-      questionEn: "Hence, factorize 25(2m − n)² − 256.",
-      questionZh: "由此，因式分解 25(2m − n)² − 256。",
+      questionEn: "Factorize 25(2m − n)² − 256.",
+      questionZh: "因式分解 25(2m − n)² − 256。",
       choices: [
         { textEn: "[5(2m − n) + 16][5(2m − n) − 16]", textZh: "[5(2m − n) + 16][5(2m − n) − 16]", correct: true },
         { textEn: "(5(2m − n) + 16)²", textZh: "(5(2m − n) + 16)²", correct: false },
@@ -476,8 +476,8 @@ window.JM25_GAME_BANK = {
       id: "c-q6",
       topic: "worksheet-c",
       source: "C",
-      questionEn: "Hence, factorize −5b² − 60b − 160.",
-      questionZh: "由此，因式分解 −5b² − 60b − 160。",
+      questionEn: "Factorize −5b² − 60b − 160.",
+      questionZh: "因式分解 −5b² − 60b − 160。",
       choices: [
         { textEn: "−5(b + 4)(b + 8)", textZh: "−5(b + 4)(b + 8)", correct: true },
         { textEn: "−5(b − 4)(b − 8)", textZh: "−5(b − 4)(b − 8)", correct: false },
@@ -489,8 +489,8 @@ window.JM25_GAME_BANK = {
       id: "c-q7",
       topic: "worksheet-c",
       source: "C",
-      questionEn: "Hence, factorize 8(3x + 2)² − 26(3x + 2) + 15.",
-      questionZh: "由此，因式分解 8(3x + 2)² − 26(3x + 2) + 15。",
+      questionEn: "Factorize 8(3x + 2)² − 26(3x + 2) + 15.",
+      questionZh: "因式分解 8(3x + 2)² − 26(3x + 2) + 15。",
       choices: [
         { textEn: "(6x − 1)(12x + 5)", textZh: "(6x − 1)(12x + 5)", correct: true },
         { textEn: "(6x + 1)(12x − 5)", textZh: "(6x + 1)(12x − 5)", correct: false },
@@ -502,8 +502,8 @@ window.JM25_GAME_BANK = {
       id: "c-q8",
       topic: "worksheet-c",
       source: "C",
-      questionEn: "Hence, factorize (x² + 2x)² − 2(x² + 2x) − 3.",
-      questionZh: "由此，因式分解 (x² + 2x)² − 2(x² + 2x) − 3。",
+      questionEn: "Factorize (x² + 2x)² − 2(x² + 2x) − 3.",
+      questionZh: "因式分解 (x² + 2x)² − 2(x² + 2x) − 3。",
       choices: [
         { textEn: "(x + 1)²(x − 1)(x + 3)", textZh: "(x + 1)²(x − 1)(x + 3)", correct: true },
         { textEn: "(x² + 2x + 1)(x² + 2x − 3)", textZh: "(x² + 2x + 1)(x² + 2x − 3)", correct: false },
@@ -515,8 +515,8 @@ window.JM25_GAME_BANK = {
       id: "c-q9",
       topic: "worksheet-c",
       source: "C",
-      questionEn: "Hence, factorize 9x² + 30x + 25 − 6x² − 10x.",
-      questionZh: "由此，因式分解 9x² + 30x + 25 − 6x² − 10x。",
+      questionEn: "Factorize 9x² + 30x + 25 − 6x² − 10x.",
+      questionZh: "因式分解 9x² + 30x + 25 − 6x² − 10x。",
       choices: [
         { textEn: "(3x + 5)(x + 5)", textZh: "(3x + 5)(x + 5)", correct: true },
         { textEn: "(3x + 5)²", textZh: "(3x + 5)²", correct: false },
@@ -582,8 +582,8 @@ window.JM25_GAME_BANK = {
       id: "d-q5",
       topic: "worksheet-d",
       source: "D",
-      questionEn: "Hence, factorize −36(a + 1)² − 12b(a + 1) + 3b².",
-      questionZh: "由此，因式分解 −36(a + 1)² − 12b(a + 1) + 3b²。",
+      questionEn: "Factorize −36(a + 1)² − 12b(a + 1) + 3b².",
+      questionZh: "因式分解 −36(a + 1)² − 12b(a + 1) + 3b²。",
       choices: [
         { textEn: "3(b − 6a − 6)(b + 2a + 2)", textZh: "3(b − 6a − 6)(b + 2a + 2)", correct: true },
         { textEn: "3(b + 6a + 6)(b − 2a − 2)", textZh: "3(b + 6a + 6)(b − 2a − 2)", correct: false },
@@ -595,8 +595,8 @@ window.JM25_GAME_BANK = {
       id: "d-q6",
       topic: "worksheet-d",
       source: "D",
-      questionEn: "Hence, factorize a² + 4ab + 4b² + 14a + 28b + 24.",
-      questionZh: "由此，因式分解 a² + 4ab + 4b² + 14a + 28b + 24。",
+      questionEn: "Factorize a² + 4ab + 4b² + 14a + 28b + 24.",
+      questionZh: "因式分解 a² + 4ab + 4b² + 14a + 28b + 24。",
       choices: [
         { textEn: "(a + 2b + 12)(a + 2b + 2)", textZh: "(a + 2b + 12)(a + 2b + 2)", correct: true },
         { textEn: "(a + 2b + 14)(a + 2b + 10)", textZh: "(a + 2b + 14)(a + 2b + 10)", correct: false },
@@ -608,8 +608,8 @@ window.JM25_GAME_BANK = {
       id: "d-q7",
       topic: "worksheet-d",
       source: "D",
-      questionEn: "Hence, factorize 18(k − 1)⁴ + 9(k − 1)² − 20.",
-      questionZh: "由此，因式分解 18(k − 1)⁴ + 9(k − 1)² − 20。",
+      questionEn: "Factorize 18(k − 1)⁴ + 9(k − 1)² − 20.",
+      questionZh: "因式分解 18(k − 1)⁴ + 9(k − 1)² − 20。",
       choices: [
         { textEn: "(3(k−1)² + 4)(6(k−1)² − 5)", textZh: "(3(k−1)² + 4)(6(k−1)² − 5)", correct: true },
         { textEn: "(3(k−1)² − 4)(6(k−1)² + 5)", textZh: "(3(k−1)² − 4)(6(k−1)² + 5)", correct: false },
@@ -701,8 +701,8 @@ window.JM25_GAME_BANK = {
       id: "e-q7",
       topic: "worksheet-e",
       source: "E",
-      questionEn: "Hence, factorize 2(x + 1)³ − 12(x + 1)² + 18(x + 1).",
-      questionZh: "由此，因式分解 2(x + 1)³ − 12(x + 1)² + 18(x + 1)。",
+      questionEn: "Factorize 2(x + 1)³ − 12(x + 1)² + 18(x + 1).",
+      questionZh: "因式分解 2(x + 1)³ − 12(x + 1)² + 18(x + 1)。",
       choices: [
         { textEn: "2(x − 2)²(x + 1)", textZh: "2(x − 2)²(x + 1)", correct: true },
         { textEn: "2(x + 2)²(x + 1)", textZh: "2(x + 2)²(x + 1)", correct: false },
@@ -714,8 +714,8 @@ window.JM25_GAME_BANK = {
       id: "e-q8",
       topic: "worksheet-e",
       source: "E",
-      questionEn: "Hence, factorize (x² − x)² − 14(x² − x) + 24.",
-      questionZh: "由此，因式分解 (x² − x)² − 14(x² − x) + 24。",
+      questionEn: "Factorize (x² − x)² − 14(x² − x) + 24.",
+      questionZh: "因式分解 (x² − x)² − 14(x² − x) + 24。",
       choices: [
         { textEn: "(x² − x − 2)(x² − x − 12)", textZh: "(x² − x − 2)(x² − x − 12)", correct: true },
         { textEn: "(x² − x + 2)(x² − x + 12)", textZh: "(x² − x + 2)(x² − x + 12)", correct: false },
@@ -849,3 +849,162 @@ window.getJM25GameQuestions = function getJM25GameQuestions(presetId) {
     return list.concat(tagged);
   }, []);
 };
+
+(function () {
+  var OPEN_TO_CLOSE = { "(": ")", "[": "]", "{": "}" };
+  var CLOSE_TO_OPEN = { ")": "(", "]": "[", "}": "{" };
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
+  function fracHtml(num, den) {
+    return (
+      '<span class="jm25-frac" role="math">' +
+      '<span class="jm25-frac-num">' +
+      escapeHtml(num) +
+      "</span>" +
+      '<span class="jm25-frac-bar" aria-hidden="true"></span>' +
+      '<span class="jm25-frac-den">' +
+      escapeHtml(den) +
+      "</span>" +
+      "</span>"
+    );
+  }
+
+  function unwrapDisplay(raw) {
+    if (raw.length >= 2) {
+      var first = raw.charAt(0);
+      var last = raw.charAt(raw.length - 1);
+      if ((first === "(" && last === ")") || (first === "[" && last === "]")) {
+        return raw.slice(1, -1);
+      }
+    }
+    return raw;
+  }
+
+  function readGroupForward(s, i) {
+    var open = s.charAt(i);
+    if (!OPEN_TO_CLOSE[open]) return null;
+    var close = OPEN_TO_CLOSE[open];
+    var depth = 1;
+    var j = i + 1;
+    while (j < s.length && depth > 0) {
+      if (s.charAt(j) === open) depth += 1;
+      else if (s.charAt(j) === close) depth -= 1;
+      j += 1;
+    }
+    if (depth !== 0) return null;
+    return { start: i, end: j, raw: s.slice(i, j) };
+  }
+
+  function readGroupBackward(s, end) {
+    var i = end - 1;
+    while (i >= 0 && s.charAt(i) === " ") i -= 1;
+    if (i < 0) return null;
+    var close = s.charAt(i);
+    if (!CLOSE_TO_OPEN[close]) return null;
+    var open = CLOSE_TO_OPEN[close];
+    var depth = 1;
+    var j = i - 1;
+    while (j >= 0 && depth > 0) {
+      if (s.charAt(j) === close) depth += 1;
+      else if (s.charAt(j) === open) depth -= 1;
+      j -= 1;
+    }
+    if (depth !== 0) return null;
+    var start = j + 1;
+    while (start > 0 && /[0-9a-zA-Z²³⁴⁵⁶⁷⁸⁹⁰]/.test(s.charAt(start - 1))) {
+      start -= 1;
+    }
+    return { start: start, end: i + 1, raw: s.slice(start, i + 1) };
+  }
+
+  function readTokenForward(s, i) {
+    var j = i;
+    while (j < s.length && !/[\s×÷。]/.test(s.charAt(j))) j += 1;
+    if (j === i) return null;
+    return { start: i, end: j, raw: s.slice(i, j) };
+  }
+
+  function readTokenBackward(s, end) {
+    var i = end;
+    while (i > 0 && s.charAt(i - 1) === " ") i -= 1;
+    var j = i;
+    while (j > 0 && !/[\s×÷。]/.test(s.charAt(j - 1))) j -= 1;
+    if (j === i) return null;
+    return { start: j, end: i, raw: s.slice(j, i) };
+  }
+
+  function parseFractionAt(s, slashIdx) {
+    var dStart = slashIdx + 1;
+    while (dStart < s.length && s.charAt(dStart) === " ") dStart += 1;
+    var den =
+      dStart < s.length && (s.charAt(dStart) === "(" || s.charAt(dStart) === "[")
+        ? readGroupForward(s, dStart)
+        : readTokenForward(s, dStart);
+    if (!den) return null;
+
+    var numEnd = slashIdx;
+    while (numEnd > 0 && s.charAt(numEnd - 1) === " ") numEnd -= 1;
+    var num =
+      numEnd > 0 && (s.charAt(numEnd - 1) === ")" || s.charAt(numEnd - 1) === "]")
+        ? readGroupBackward(s, numEnd)
+        : readTokenBackward(s, numEnd);
+    if (!num) return null;
+
+    return {
+      start: num.start,
+      end: den.end,
+      num: unwrapDisplay(num.raw),
+      den: unwrapDisplay(den.raw),
+    };
+  }
+
+  /** e.g. (x/2 + 25)² — keep slash inline, not a stacked fraction */
+  function shouldSkipVerticalFraction(s, frac) {
+    if (frac.start <= 0 || s.charAt(frac.start - 1) !== "(") return false;
+    var openIdx = frac.start - 1;
+    var depth = 0;
+    var k;
+    for (k = openIdx; k < s.length; k++) {
+      var ch = s.charAt(k);
+      if (ch === "(") depth += 1;
+      else if (ch === ")") {
+        depth -= 1;
+        if (depth === 0) {
+          var tail = s.slice(frac.end, k);
+          return /[\+\-\u2212]/.test(tail);
+        }
+      }
+    }
+    return false;
+  }
+
+  window.formatJM25GameMath = function formatJM25GameMath(text) {
+    if (!text || text.indexOf("/") < 0) return escapeHtml(text);
+    var s = String(text);
+    var pos = 0;
+    var out = "";
+    while (pos < s.length) {
+      var slashIdx = s.indexOf("/", pos);
+      if (slashIdx < 0) {
+        out += escapeHtml(s.slice(pos));
+        break;
+      }
+      var frac = parseFractionAt(s, slashIdx);
+      if (frac && frac.start >= pos && !shouldSkipVerticalFraction(s, frac)) {
+        out += escapeHtml(s.slice(pos, frac.start));
+        out += fracHtml(frac.num, frac.den);
+        pos = frac.end;
+      } else {
+        out += escapeHtml(s.slice(pos, slashIdx + 1));
+        pos = slashIdx + 1;
+      }
+    }
+    return out;
+  };
+})();
