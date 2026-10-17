@@ -2592,3 +2592,286 @@ body.reader-open {
     margin-right: 0;
   }
 }
+
+/* —— JM28 special-lines summary sheet —— */
+.lesson-main:has(#view-summary.is-active) {
+  width: min(1120px, calc(100% - 1.5rem));
+}
+
+.jm28-sheet {
+  position: relative;
+  margin-top: 0.25rem;
+  padding: 1.35rem 1.25rem 1.5rem;
+  background-color: #f6f1e4;
+  background-image: radial-gradient(#e3d5bf 1.15px, transparent 1.25px);
+  background-size: 16px 16px;
+  border: 3px solid #2c2c2c;
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(60, 42, 20, 0.12);
+  overflow: hidden;
+}
+
+.jm28-sheet-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+.jm28-bulb {
+  width: 34px;
+  height: 44px;
+  flex: none;
+}
+
+.jm28-ribbon {
+  position: relative;
+  margin: 0;
+  padding: 0.45rem 2.4rem 0.55rem;
+  background: #f6e6b4;
+  border: 2.5px solid #2c2c2c;
+  text-align: center;
+  min-width: min(100%, 28rem);
+}
+
+.jm28-ribbon:before,
+.jm28-ribbon:after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  width: 14px;
+  background: #ecd48a;
+  border: 2.5px solid #2c2c2c;
+}
+
+.jm28-ribbon:before {
+  left: -12px;
+  border-right: none;
+  transform: skewY(12deg);
+}
+
+.jm28-ribbon:after {
+  right: -12px;
+  border-left: none;
+  transform: skewY(-12deg);
+}
+
+.jm28-ribbon h2 {
+  margin: 0;
+  font-family: Fraunces, Georgia, serif;
+  font-size: clamp(1.35rem, 2.6vw, 1.85rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #2a2418;
+}
+
+.jm28-ribbon p {
+  margin: 0.1rem 0 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #3d3424;
+}
+
+.jm28-quote {
+  width: min(46rem, 100%);
+  margin: 0.9rem auto 1rem;
+  padding: 0.45rem 1.1rem;
+  background: #e7f3fb;
+  border: 2px solid #b9d6ec;
+  border-radius: 999px;
+  text-align: center;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: #243646;
+}
+
+.jm28-sheet-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+.jm28-card {
+  position: relative;
+  border: 2.5px dashed #2c2c2c;
+  border-radius: 14px;
+  padding: 0.8rem 0.85rem 0.75rem;
+}
+
+.jm28-card-median { background: #f8e7a0; }
+.jm28-card-altitude { background: #d4e7f8; }
+.jm28-card-bisector { background: #d5edd9; }
+.jm28-card-perp { background: #f8d4c4; }
+
+.jm28-card-top {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, 0.85fr) 1.25fr;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.jm28-card h3 {
+  margin: 0;
+  font-family: Fraunces, Georgia, serif;
+  font-size: 1.2rem;
+  line-height: 1.15;
+  color: #2a2418;
+}
+
+.jm28-card-perp h3 {
+  font-size: 1.02rem;
+}
+
+.jm28-card h3 span {
+  display: block;
+  margin-top: 0.15rem;
+  font-family: "Microsoft JhengHei", "PingFang HK", "Noto Sans TC", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.jm28-card p {
+  margin: 0.45rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: #2a2418;
+}
+
+.jm28-card p.zh {
+  margin-top: 0.12rem;
+  font-weight: 700;
+  font-family: "Microsoft JhengHei", "PingFang HK", "Noto Sans TC", sans-serif;
+}
+
+.jm28-note {
+  font-size: 0.82rem !important;
+  font-style: italic;
+}
+
+.jm28-diagram {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.jm28-diagram text {
+  font-family: Fraunces, Georgia, serif;
+  font-size: 14px;
+  font-weight: 700;
+  fill: #2a2418;
+}
+
+.jm28-mark {
+  fill: none;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}
+
+.jm28-mark-median { stroke: #c4841a; }
+.jm28-mark-altitude { stroke: #2f74b5; }
+.jm28-mark-bisector { stroke: #2f8a55; }
+.jm28-mark-perp {
+  stroke: #c45c32;
+  stroke-dasharray: 6 4;
+}
+
+.jm28-tick,
+.jm28-right,
+.jm28-arc {
+  fill: none;
+  stroke: #2b2b2b;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.jm28-clip {
+  position: absolute;
+  top: -12px;
+  left: 22px;
+  width: 14px;
+  height: 26px;
+  border: 2.5px solid #8d939c;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+}
+
+.jm28-clip:after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 8px;
+  width: 6px;
+  height: 14px;
+  border: 2px solid #b4bac2;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+}
+
+.jm28-tape {
+  position: absolute;
+  top: -9px;
+  left: 16px;
+  width: 48px;
+  height: 16px;
+  background: rgba(168, 184, 156, 0.85);
+  transform: rotate(-10deg);
+  border-radius: 2px;
+}
+
+.jm28-star,
+.jm28-check {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+}
+
+.jm28-star {
+  background:
+    linear-gradient(#2c2c2c, #2c2c2c) center/2px 100% no-repeat,
+    linear-gradient(#2c2c2c, #2c2c2c) center/100% 2px no-repeat;
+  transform: rotate(20deg);
+}
+
+.jm28-star:before,
+.jm28-star:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(#2c2c2c, #2c2c2c) center/2px 100% no-repeat;
+}
+
+.jm28-star:before { transform: rotate(45deg); }
+.jm28-star:after { transform: rotate(-45deg); }
+
+.jm28-star-a { top: 18px; left: 18px; }
+.jm28-star-b { top: 22px; right: 22px; }
+
+.jm28-check {
+  width: 16px;
+  height: 10px;
+  border-left: 2.5px solid #7d9a72;
+  border-bottom: 2.5px solid #7d9a72;
+  transform: rotate(-40deg);
+  background: none;
+}
+
+.jm28-check-a { left: 16px; top: 92px; }
+.jm28-check-b { left: 28px; top: 112px; }
+
+@media (max-width: 720px) {
+  .jm28-sheet-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .jm28-ribbon {
+    min-width: 0;
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+  }
+
+  .jm28-card-top {
+    grid-template-columns: 1fr;
+  }
+}

@@ -111,9 +111,15 @@
     return "tools";
   }
 
+  function allowedTabs() {
+    var tabs = VALID_TABS.slice();
+    if (getLessonId() === "jm28") tabs.push("summary");
+    return tabs;
+  }
+
   function parseHash() {
     var hash = (location.hash || "").replace("#", "");
-    if (VALID_TABS.indexOf(hash) >= 0) return hash;
+    if (allowedTabs().indexOf(hash) >= 0) return hash;
     return getDefaultTab();
   }
 
@@ -146,6 +152,16 @@
     var title = t("topic." + topic.id + ".title", topic.title);
     document.title = topic.code + " · " + title + " · S3 Mathematics";
 
+    var summaryNav = "";
+    var summarySection = "";
+    if (getLessonId() === "jm28") {
+      summaryNav =
+        '    <button type="button" class="main-tab" data-tab="summary" data-i18n="tab.summary">' +
+        t("tab.summary", "Summary") +
+        "</button>";
+      summarySection = '  <section id="view-summary" class="view"></section>';
+    }
+
     var app = document.getElementById("app");
     app.innerHTML =
       '<header class="topbar">' +
@@ -173,12 +189,14 @@
       '    <button type="button" class="main-tab" data-tab="game" data-i18n="tab.game">' +
       t("tab.game", "Game") +
       "</button>" +
+      summaryNav +
       "  </nav>" +
       "</header>" +
       '<main class="lesson-main">' +
       '  <section id="view-tools" class="view"></section>' +
       '  <section id="view-comics" class="view"></section>' +
       '  <section id="view-game" class="view"></section>' +
+      summarySection +
       "</main>";
 
     app.querySelector(".main-tabs").addEventListener("click", function (e) {
@@ -197,11 +215,12 @@
     renderToolsView(topic);
     renderComicsView(topic);
     renderGameView(topic);
+    renderSummaryView();
     switchTab(parseHash(), true);
   }
 
   function switchTab(tab, skipHash) {
-    if (VALID_TABS.indexOf(tab) < 0) tab = getDefaultTab();
+    if (allowedTabs().indexOf(tab) < 0) tab = getDefaultTab();
     activeTab = tab;
     if (!skipHash) setHash(tab);
 
@@ -221,6 +240,19 @@
         game.onHide && game.onHide();
       }
     }
+  }
+
+  function renderSummaryView() {
+    var el = document.getElementById("view-summary");
+    if (!el || typeof window.renderJM28Summary !== "function") return;
+    el.innerHTML =
+      '<div class="hero-panel"><p>' +
+      t(
+        "summary.jm28.intro",
+        "One page for the four special lines in a triangle."
+      ) +
+      "</p></div>" +
+      window.renderJM28Summary();
   }
 
   function renderComingSoon(titleKey, descText) {
