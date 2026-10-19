@@ -162,6 +162,11 @@ body.reader-open {
   margin: 1rem 0;
 }
 
+.summary-pills {
+  margin-top: 0.15rem;
+  flex-wrap: wrap;
+}
+
 .tool-pill {
   padding: 0.35rem 0.85rem;
   border-radius: 999px;
@@ -2692,6 +2697,15 @@ body.reader-open {
   gap: 0.85rem;
 }
 
+.jm28-group {
+  grid-column: 1 / -1;
+  margin: 0.15rem 0 0;
+  font-family: Fraunces, Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #2a2418;
+}
+
 .jm28-card {
   position: relative;
   border: 2.5px dashed #2c2c2c;
@@ -2703,6 +2717,19 @@ body.reader-open {
 .jm28-card-altitude { background: #d4e7f8; }
 .jm28-card-bisector { background: #d5edd9; }
 .jm28-card-perp { background: #f8d4c4; }
+.jm28-card-trans { background: #f6e7c4; }
+.jm28-card-corr { background: #f8d4e0; }
+.jm28-card-alt { background: #d7eef0; }
+.jm28-card-cointerior { background: #e4dff6; }
+.jm28-card-aaa { background: #f7e3b0; }
+.jm28-card-prop { background: #d9e8c8; }
+.jm28-card-ratio { background: #f8dcc8; }
+.jm28-card-sss { background: #d4e4f5; }
+.jm28-card-sas { background: #e7d8f2; }
+.jm28-card-asa { background: #f6e0ea; }
+.jm28-card-aas { background: #d8f0e4; }
+.jm28-card-rhs { background: #f3e6c0; }
+.jm28-card-ass { background: #f6d6d0; }
 
 .jm28-card-top {
   display: grid;
@@ -2719,7 +2746,14 @@ body.reader-open {
   color: #2a2418;
 }
 
-.jm28-card-perp h3 {
+.jm28-card-perp h3,
+.jm28-card-corr h3,
+.jm28-card-alt h3,
+.jm28-card-cointerior h3,
+.jm28-card-prop h3,
+.jm28-card-ratio h3,
+.jm28-card-rhs h3,
+.jm28-card-ass h3 {
   font-size: 1.02rem;
 }
 
@@ -2760,7 +2794,59 @@ body.reader-open {
   font-size: 14px;
   font-weight: 700;
   fill: #2a2418;
+  paint-order: stroke fill;
+  stroke-width: 5px;
+  stroke-linejoin: round;
 }
+
+.jm28-diagram text.jm28-ang,
+.jm28-diagram text.jm28-len {
+  font-size: 12px;
+  stroke-width: 3.5px;
+}
+
+.jm28-card-median .jm28-diagram text,
+.jm28-centre-centroid .jm28-diagram text { stroke: #f8e7a0; }
+.jm28-card-altitude .jm28-diagram text,
+.jm28-centre-ortho .jm28-diagram text { stroke: #d4e7f8; }
+.jm28-card-bisector .jm28-diagram text,
+.jm28-centre-in .jm28-diagram text { stroke: #d5edd9; }
+.jm28-card-perp .jm28-diagram text,
+.jm28-centre-circum .jm28-diagram text { stroke: #f8d4c4; }
+.jm28-card-trans .jm28-diagram text { stroke: #f6e7c4; }
+.jm28-card-corr .jm28-diagram text { stroke: #f8d4e0; }
+.jm28-card-alt .jm28-diagram text { stroke: #d7eef0; }
+.jm28-card-cointerior .jm28-diagram text { stroke: #e4dff6; }
+.jm28-card-aaa .jm28-diagram text { stroke: #f7e3b0; }
+.jm28-card-prop .jm28-diagram text { stroke: #d9e8c8; }
+.jm28-card-ratio .jm28-diagram text { stroke: #f8dcc8; }
+.jm28-card-sss .jm28-diagram text { stroke: #d4e4f5; }
+.jm28-card-sas .jm28-diagram text { stroke: #e7d8f2; }
+.jm28-card-asa .jm28-diagram text { stroke: #f6e0ea; }
+.jm28-card-aas .jm28-diagram text { stroke: #d8f0e4; }
+.jm28-card-rhs .jm28-diagram text { stroke: #f3e6c0; }
+.jm28-card-ass .jm28-diagram text { stroke: #f6d6d0; }
+
+.jm28-ray,
+.jm28-arrow {
+  fill: none;
+  stroke: #2b2b2b;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.jm28-trans {
+  fill: none;
+  stroke: #c45c32;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+}
+
+.jm28-wedge { stroke: none; }
+.jm28-wedge-corr { fill: #d35400; fill-opacity: 0.78; }
+.jm28-wedge-alt { fill: #2f74b5; fill-opacity: 0.78; }
+.jm28-wedge-int { fill: #1f8a4c; fill-opacity: 0.78; }
 
 .jm28-mark {
   fill: none;
@@ -2820,8 +2906,7 @@ body.reader-open {
   border-radius: 2px;
 }
 
-.jm28-star,
-.jm28-check {
+.jm28-star {
   position: absolute;
   width: 14px;
   height: 14px;
@@ -2848,17 +2933,135 @@ body.reader-open {
 .jm28-star-a { top: 18px; left: 18px; }
 .jm28-star-b { top: 22px; right: 22px; }
 
-.jm28-check {
-  width: 16px;
-  height: 10px;
-  border-left: 2.5px solid #7d9a72;
-  border-bottom: 2.5px solid #7d9a72;
-  transform: rotate(-40deg);
-  background: none;
+.jm28-sheet + .jm28-sheet {
+  margin-top: 1.35rem;
 }
 
-.jm28-check-a { left: 16px; top: 92px; }
-.jm28-check-b { left: 28px; top: 112px; }
+.jm28-centre {
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.72fr) 1.7fr;
+  gap: 0.65rem 0.85rem;
+  align-items: center;
+  margin-top: 0.85rem;
+  padding: 0.75rem 0.8rem 0.7rem;
+  border: 2.5px dashed #2c2c2c;
+  border-radius: 14px;
+}
+
+.jm28-centre-in { background: #d5edd9; }
+.jm28-centre-centroid { background: #f8e7a0; }
+.jm28-centre-circum { background: #f8d4c4; }
+.jm28-centre-ortho { background: #d4e7f8; }
+
+.jm28-centre h3 {
+  margin: 0;
+  font-family: Fraunces, Georgia, serif;
+  font-size: 1.2rem;
+  line-height: 1.15;
+  color: #2a2418;
+}
+
+.jm28-centre h3 span {
+  display: block;
+  margin-top: 0.12rem;
+  font-family: "Microsoft JhengHei", "PingFang HK", "Noto Sans TC", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.jm28-centre p {
+  margin: 0.4rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.35;
+  color: #2a2418;
+}
+
+.jm28-centre p.zh {
+  margin-top: 0.12rem;
+  font-weight: 700;
+  font-family: "Microsoft JhengHei", "PingFang HK", "Noto Sans TC", sans-serif;
+}
+
+.jm28-centre-figs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.jm28-mini {
+  margin: 0;
+  text-align: center;
+}
+
+.jm28-mini figcaption {
+  font-size: 0.78rem;
+  line-height: 1.2;
+  color: #2a2418;
+}
+
+.jm28-mini figcaption b {
+  display: block;
+  font-family: Fraunces, Georgia, serif;
+  font-size: 0.86rem;
+}
+
+.jm28-mini figcaption span,
+.jm28-mini p span {
+  display: block;
+  font-family: "Microsoft JhengHei", "PingFang HK", "Noto Sans TC", sans-serif;
+  font-weight: 700;
+}
+
+.jm28-mini p {
+  margin: 0.15rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.25;
+  color: #2a2418;
+}
+
+.jm28-median {
+  stroke: #c4841a;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.jm28-bis,
+.jm28-alt,
+.jm28-perp {
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.jm28-bis { stroke: #2f8a55; }
+.jm28-alt { stroke: #2f74b5; }
+
+.jm28-perp {
+  stroke: #c45c32;
+  stroke-dasharray: 5 4;
+}
+
+.jm28-radius {
+  fill: none;
+  stroke: #e02323;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.jm28-extend {
+  fill: none;
+  stroke: #2b2b2b;
+  stroke-width: 1.6;
+  stroke-dasharray: 2.5 3;
+  stroke-linecap: round;
+}
+
+.jm28-drop {
+  stroke: #2f74b5;
+  stroke-width: 1.7;
+  stroke-dasharray: 5 4;
+  stroke-linecap: round;
+}
 
 @media (max-width: 720px) {
   .jm28-sheet-grid {
@@ -2872,6 +3075,10 @@ body.reader-open {
   }
 
   .jm28-card-top {
+    grid-template-columns: 1fr;
+  }
+
+  .jm28-centre {
     grid-template-columns: 1fr;
   }
 }

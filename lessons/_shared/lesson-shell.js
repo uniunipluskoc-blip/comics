@@ -4,6 +4,7 @@
   var activeComicTopic = null;
   var activeToolPill = "sci-notation";
   var jm28Active = "lines";
+  var jm28Summary = "lines";
   var jm25Active = "shooter";
 
   function t(key, fallback) {
@@ -244,15 +245,63 @@
 
   function renderSummaryView() {
     var el = document.getElementById("view-summary");
-    if (!el || typeof window.renderJM28Summary !== "function") return;
+    if (!el) return;
+    if (jm28Summary !== "centres" && jm28Summary !== "angles" && jm28Summary !== "triangles") jm28Summary = "lines";
+    var introKey = "summary.jm28.intro." + jm28Summary;
+    var introFallback =
+      jm28Summary === "centres"
+        ? "One page for the four centres of a triangle."
+        : jm28Summary === "angles"
+          ? "One page for the transversal and the three angle pairs."
+          : jm28Summary === "triangles"
+            ? "One page for the reasons two triangles are similar or congruent."
+            : "One page for the four special lines in a triangle.";
+    var sheet = "";
+    if (jm28Summary === "lines" && typeof window.renderJM28SummaryLines === "function") {
+      sheet = window.renderJM28SummaryLines();
+    } else if (jm28Summary === "centres" && typeof window.renderJM28SummaryCentres === "function") {
+      sheet = window.renderJM28SummaryCentres();
+    } else if (jm28Summary === "angles" && typeof window.renderJM28SummaryAngles === "function") {
+      sheet = window.renderJM28SummaryAngles();
+    } else if (jm28Summary === "triangles" && typeof window.renderJM28SummaryTriangles === "function") {
+      sheet = window.renderJM28SummaryTriangles();
+    }
     el.innerHTML =
+      '<div class="tool-pills summary-pills" id="summary-pills">' +
+      '  <button type="button" class="tool-pill' +
+      (jm28Summary === "lines" ? " is-active" : "") +
+      '" data-summary="lines" data-i18n="summary.jm28.pill.lines">' +
+      t("summary.jm28.pill.lines", "Special Lines") +
+      "</button>" +
+      '  <button type="button" class="tool-pill' +
+      (jm28Summary === "centres" ? " is-active" : "") +
+      '" data-summary="centres" data-i18n="summary.jm28.pill.centres">' +
+      t("summary.jm28.pill.centres", "Triangle Centres") +
+      "</button>" +
+      '  <button type="button" class="tool-pill' +
+      (jm28Summary === "angles" ? " is-active" : "") +
+      '" data-summary="angles" data-i18n="summary.jm28.pill.angles">' +
+      t("summary.jm28.pill.angles", "Angle Pairs") +
+      "</button>" +
+      '  <button type="button" class="tool-pill' +
+      (jm28Summary === "triangles" ? " is-active" : "") +
+      '" data-summary="triangles" data-i18n="summary.jm28.pill.triangles">' +
+      t("summary.jm28.pill.triangles", "Similar & Congruent") +
+      "</button>" +
+      "</div>" +
       '<div class="hero-panel"><p>' +
-      t(
-        "summary.jm28.intro",
-        "One page for the four special lines in a triangle."
-      ) +
+      t(introKey, introFallback) +
       "</p></div>" +
-      window.renderJM28Summary();
+      sheet;
+
+    var pills = el.querySelector("#summary-pills");
+    if (!pills) return;
+    pills.addEventListener("click", function (e) {
+      var btn = e.target.closest("[data-summary]");
+      if (!btn) return;
+      jm28Summary = btn.getAttribute("data-summary");
+      renderSummaryView();
+    });
   }
 
   function renderComingSoon(titleKey, descText) {
