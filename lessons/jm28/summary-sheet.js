@@ -687,19 +687,19 @@ function angleSvg(mode) {
   var crossing = mode === "trans" ? "jm28-trans" : "jm28-ray";
   var label = "";
   var ends =
-    '<text text-anchor="middle" x="30" y="34">A</text>' +
-    '<text text-anchor="middle" x="188" y="28">B</text>' +
-    '<text text-anchor="middle" x="30" y="100">C</text>' +
-    '<text text-anchor="middle" x="188" y="94">D</text>';
+    '<text text-anchor="middle" dominant-baseline="central" x="14" y="42">A</text>' +
+    '<text text-anchor="middle" dominant-baseline="central" x="214" y="42">B</text>' +
+    '<text text-anchor="middle" dominant-baseline="central" x="14" y="108">C</text>' +
+    '<text text-anchor="middle" dominant-baseline="central" x="214" y="108">D</text>';
   if (mode === "trans") label = '<text x="46" y="32">t</text>' + ends;
   if (mode === "corr") label = ang(105.8, 51.1, "x") + ang(162, 115.2, "y") + ends;
   if (mode === "alt") label = ang(105.8, 51.1, "x") + ang(112.8, 96.2, "y") + ends;
   if (mode === "cointerior") label = ang(105.8, 51.1, "x") + ang(143.4, 93.8, "y") + ends;
   return (
-    '<svg class="jm28-diagram" viewBox="0 0 220 156" role="img">' +
+    '<svg class="jm28-diagram" viewBox="0 0 236 156" role="img">' +
     wedges +
-    '<path class="jm28-ray" d="M18 42 H202"/>' +
-    '<path class="jm28-ray" d="M18 108 H202"/>' +
+    '<path class="jm28-ray" d="M28 42 H202"/>' +
+    '<path class="jm28-ray" d="M28 108 H202"/>' +
     '<path class="' +
     crossing +
     '" d="M71.5 19.4 L164.3 146.8"/>' +
