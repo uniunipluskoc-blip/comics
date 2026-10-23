@@ -86,8 +86,8 @@ window.renderJM28SummaryAngles = function renderJM28SummaryAngles() {
       "Corresponding angles",
       "同位角",
       angleSvg("corr"),
-      "The same corner at each crossing. x = y.",
-      "每個交點上相同位置的角。x = y。",
+      "x = y (corr. angles, AB // CD).",
+      "x = y（同位角，AB // CD）。",
       ""
     ) +
     card(
@@ -95,8 +95,8 @@ window.renderJM28SummaryAngles = function renderJM28SummaryAngles() {
       "Alternate angles",
       "內錯角",
       angleSvg("alt"),
-      "Between the parallels, on opposite sides of the transversal. x = y.",
-      "在平行線之間、截線的兩側。x = y。",
+      "x = y (alt. angles, AB // CD).",
+      "x = y（內錯角，AB // CD）。",
       ""
     ) +
     card(
@@ -104,8 +104,8 @@ window.renderJM28SummaryAngles = function renderJM28SummaryAngles() {
       "Interior angles",
       "同旁內角",
       angleSvg("cointerior"),
-      "Between the parallels, on the same side of the transversal. x + y = 180°.",
-      "在平行線之間、截線的同一側。x + y = 180°。",
+      "x + y = 180° (int. angles, AB // CD).",
+      "x + y = 180°（同旁內角，AB // CD）。",
       ""
     ) +
     "  </div>" +
@@ -686,10 +686,15 @@ function angleSvg(mode) {
   if (mode === "cointerior") wedges = wedge(88, 42, "int", "se", 34) + wedge(136, 108, "int", "ne", 30);
   var crossing = mode === "trans" ? "jm28-trans" : "jm28-ray";
   var label = "";
-  if (mode === "trans") label = '<text x="46" y="32">t</text>';
-  if (mode === "corr") label = ang(105.8, 51.1, "x") + ang(162, 115.2, "y");
-  if (mode === "alt") label = ang(105.8, 51.1, "x") + ang(112.8, 96.2, "y");
-  if (mode === "cointerior") label = ang(105.8, 51.1, "x") + ang(143.4, 93.8, "y");
+  var ends =
+    '<text text-anchor="middle" x="30" y="34">A</text>' +
+    '<text text-anchor="middle" x="188" y="28">B</text>' +
+    '<text text-anchor="middle" x="30" y="100">C</text>' +
+    '<text text-anchor="middle" x="188" y="94">D</text>';
+  if (mode === "trans") label = '<text x="46" y="32">t</text>' + ends;
+  if (mode === "corr") label = ang(105.8, 51.1, "x") + ang(162, 115.2, "y") + ends;
+  if (mode === "alt") label = ang(105.8, 51.1, "x") + ang(112.8, 96.2, "y") + ends;
+  if (mode === "cointerior") label = ang(105.8, 51.1, "x") + ang(143.4, 93.8, "y") + ends;
   return (
     '<svg class="jm28-diagram" viewBox="0 0 220 156" role="img">' +
     wedges +
